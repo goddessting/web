@@ -18,7 +18,7 @@ function addEmployee() {
     employeeInfo.push({id: id, name: name, age: age, number: number});
 
     for (var i = 0; i < employeeInfo.length; i++) {
-        buttonList += `<button  class="btn btn-info btn-lg btn-block" onclick="displayInfo(${employeeInfo[i].name})">${employeeInfo[i].name}</button><br>`;
+        buttonList += `<button  type="button" class="btn btn-info btn-lg btn-block" onclick="displayInfo(${employeeInfo[i].name})">${employeeInfo[i].name}</button><br>`;
     }
     return document.getElementById("display").innerHTML = buttonList;
 }
@@ -27,8 +27,12 @@ function displayInfo(id) {
     for (var i = 0; i < employeeInfo.length; i++) {
         if (id == employeeInfo[i].id) {
             document.getElementById("add-2").innerHTML = `
-             <label for="exampleInputEmail1">员工姓名</label>
-             <div class="form-control">${employeeInfo[i].name}</div>
+             <div class="form-group">
+                        <label for="exampleInputEmail1">员工姓名</label>
+                        <div class="form-control display-inline-left">${employeeInfo[i].name}</div>
+             </div>
+             
+             
               <label for="exampleInputEmail1">员工工龄</label>
              <div class="form-control">${employeeInfo[i].age}</div>
              <label for="exampleInputEmail1">电话号码</label>
@@ -42,77 +46,88 @@ function showForm() {
     count++;
 
     return document.getElementById("add-2").innerHTML = `
-           <form role="form" name="myform" action="" method="post">
-            <div class="form-group">
-                <label for="exampleInputEmail1">工号</label>
-                <div class="div-inline-left">
-                    <input class="form-control div-inline-left" value="${count}" id="id-0">
-                </div>
-                <div class="div-inline-right">
-                    <label id="emp_no_id" class="control-label" style="color:red"></label>
-                </div>
+             <div class="col-md-4">
+                <form role="form" name="myform" action="" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">工号</label>
+                        <input type="text" class="form-control" value="${count}" id="id-0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">姓名</label>
+                        <input type="text" class="form-control name" id="exampleInputEmail1" placeholder="请输入姓名"
+                               name="emp_no" onblur="checkEmpName()"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">工龄</label>
+                        <input type="text" class="form-control age" id="exampleInputPassword1" placeholder="请输入工龄"
+                               name="emp_center" onblur="checkEmpAge()"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputNumber1">电话号码</label>
+                        <input type="text" class="form-control number" id="exampleInputNumber1" placeholder="请输入电话号码"
+                               name="emp_buttom" onblur='return checkEmpTelNum();'>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputNumber1"></label>
+                        <input type="button" class="btn btn-info form-control" onclick="checkAll()" value="确认添加">
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">姓名</label>
-                <div class="div-inline-left">
-                    <input type="text" class="form-control name" id="exampleInputEmail1" placeholder="请输入姓名"
-                           name="emp_no" onblur="checkEmpName()"/>
-                </div>
-                <div class="div-inline-right">
-                    <label id="emp_no_tip" class="control-label" style="color:red"></label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">工龄</label>
-                <div class="div-inline-left">
-                    <input type="text" class="form-control age" id="exampleInputPassword1" placeholder="请输入工龄"
-                           name="emp_center" onblur="checkEmpAge()"/>
-                </div>
-                <div class="div-inline-right">
-                    <label id="emp_no_center" class="control-label" style="color:red"></label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputNumber1">电话号码</label>
-                <div class="div-inline-left">
-                    <input type="text" class="form-control number" id="exampleInputNumber1" placeholder="请输入电话号码"
-                           name="emp_buttom" onblur='return checkEmpTelNum();'>
-                </div>
+
+            <div class="col-md-4">
+                <br>
+                <br>
                 <div class="div-inline-right">
                     <label id="emp_no_buttom" class="control-label" style="color:red"></label>
                 </div>
-            </div>
-             <div class="form-group">
-                <label for="exampleInputFile">上传头像</label>
-                <!--<div class="div-inline-left">-->
-                <input type="file" id="exampleInputFile" class="img"/>
-                <p class="help-block"></p>
-                <!--</div>-->
-            </div>
-            <button type="button" class="btn btn-info" onclick="checkAll()">确认添加</button>
-        </form>`;
+
+                <br>
+                <br>
+                <br>
+                <div class="div-inline-right">
+                    <label id="emp_no_id" class="control-label" style="color:red"></label>
+                </div>
+
+                <br>
+                <br>
+                <br>
+                <div class="div-inline-right">
+                    <label id="emp_no_tip" class="control-label" style="color:red"></label>
+                </div>
+
+                <br>
+                <br>
+                <br>
+                <div class="div-inline-right">
+                    <label id="emp_no_center" class="control-label" style="color:red"></label>
+                </div>
+
+            </div>`;
 }
 
 function checkEmpName() {
     var reg = /^[\u4e00-\u9fa5]{2,10}$/;
     var emp_name = document.getElementsByClassName("name")[0];
     if (!reg.test(emp_name.value)) {
-        document.getElementById("emp_no_tip").innerHTML = "<img src='../error.jpg'>请输入真实姓名,10字以内中文!";
+        document.getElementById("emp_no_id").innerHTML = "<img src='../error.jpg'>请输入真实姓名,10字以内中文!";
         emp_name.focus();
         return false;
     }
     else {
-        document.getElementById("emp_no_tip").innerHTML = "<img src='../right.png'>";
+        document.getElementById("emp_no_id").innerHTML = "<img src='../right.png'>";
         return true;
     }
 }
 
 function checkEmpAge() {
     var age = document.getElementsByClassName('age')[0];
-    alert(age.value);
     var pattern = /^[0-9]{1,2}$/;
     if (!pattern.test(age.value)) {
-        document.getElementById("emp_no_center").innerHTML = "<h5>请输入数字,长度1-2位!<h5>";
+        document.getElementById("emp_no_tip").innerHTML = "<h5>请输入数字,长度1-2位!<h5>";
         age.focus();
 
         return false;
@@ -125,12 +140,12 @@ function checkEmpTelNum() {
     var reg = /^1[3-8][0-9]{9}$/;
     var emp_tel_num = document.getElementsByClassName('number')[0];
     if (!reg.test(emp_tel_num.value)) {
-        document.getElementById("emp_no_buttom").innerHTML = "<img src='../error.jpg'>请输入11位正确手机号码!";
+        document.getElementById("emp_no_center").innerHTML = "<img src='../error.jpg'>请输入11位正确手机号码!";
         emp_tel_num.focus();
         return false;
     }
     else {
-        document.getElementById("emp_no_buttom").innerHTML = "<img src='../right.png'>";
+        document.getElementById("emp_no_center").innerHTML = "<img src='../right.png'>";
         return true;
     }
 }
@@ -167,7 +182,7 @@ function findEmployee() {
     for (var i = 0; i < employeeInfo.length; i++) {
         if (id == employeeInfo[i].id) {
             return document.getElementById("display").innerHTML = `
-            <button  class="btn btn-primary btn-lg btn-block" onclick="displayInfo(${employeeInfo[i].id})">${employeeInfo[i].name}</button>`;
+            <button  type='button' class="btn btn-primary btn-lg btn-block" onclick="displayInfo(${employeeInfo[i].id})">${employeeInfo[i].name}</button>`;
         }
     }
     alert('该员工不存在');
