@@ -113,12 +113,12 @@ function checkEmpName() {
     var reg = /^[\u4e00-\u9fa5]{2,10}$/;
     var emp_name = document.getElementsByClassName("name")[0];
     if (!reg.test(emp_name.value)) {
-        document.getElementById("emp_no_id").innerHTML = "<img src='../error.jpg'>请输入真实姓名,10字以内中文!";
+        document.getElementById("emp_no_id").innerHTML = "<img src='error.jpg'>请输入真实姓名,10字以内中文!";
         emp_name.focus();
         return false;
     }
     else {
-        document.getElementById("emp_no_id").innerHTML = "<img src='../right.png'>";
+        document.getElementById("emp_no_id").innerHTML = "<img src='right.png'>";
         return true;
     }
 }
@@ -132,7 +132,7 @@ function checkEmpAge() {
 
         return false;
     }
-    document.getElementById("emp_no_tip").innerHTML = "<img src='../right.png'>";
+    document.getElementById("emp_no_tip").innerHTML = "<img src='ight.png'>";
     return true;
 }
 
@@ -140,12 +140,12 @@ function checkEmpTelNum() {
     var reg = /^1[3-8][0-9]{9}$/;
     var emp_tel_num = document.getElementsByClassName('number')[0];
     if (!reg.test(emp_tel_num.value)) {
-        document.getElementById("emp_no_center").innerHTML = "<img src='../error.jpg'>请输入11位正确手机号码!";
+        document.getElementById("emp_no_center").innerHTML = "<img src='error.jpg'>请输入11位正确手机号码!";
         emp_tel_num.focus();
         return false;
     }
     else {
-        document.getElementById("emp_no_center").innerHTML = "<img src='../right.png'>";
+        document.getElementById("emp_no_center").innerHTML = "<img src=right.png'>";
         return true;
     }
 }

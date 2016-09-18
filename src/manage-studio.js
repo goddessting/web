@@ -1,22 +1,23 @@
 var addArray = [];
 var id = 1;
-// var buttonList = '';
+var imgs = [];
 
 function setSeat() {
     buttonList = '';
-    let id = document.getElementsByClassName("id")[0].value;
+    var id_1 = document.getElementsByClassName("id")[0].value;
     let name = document.getElementsByClassName("name")[0].value;
     let cols = document.getElementsByClassName("col-count")[0].value;
     let rows = document.getElementsByClassName("row-count")[0].value;
-    let img = [];
+    imgs = [];
 
     for (var i = 1; i <= cols; i++) {
-        img.push(`<br>`);
+        imgs.push(`<br>`);
         for (var j = 1; j <= rows; j++) {
-            img.push("<img src='images.png'  onclick='onchangeState()'>");
+            imgs.push(`<img src='images.png' id='img${i}${j}' onclick="onchangeState('img', ${i}${j}, ${id_1})">`);
         }
     }
-    addArray.push({id: id, name: name, cols: cols, rows: rows, img: img});
+    addArray.push({id: id_1, name: name, img: imgs});
+    
     for (var i = 0; i < addArray.length; i++) {
 
         buttonList += `<button  type="button" class="btn bg-success btn-lg btn-block" onclick="displayInfo(${addArray[i].name})">${addArray[i].name}号演出厅</button><br>`;
@@ -25,8 +26,20 @@ function setSeat() {
     return document.getElementById("display").innerHTML = buttonList;
 }
 
-function onchangeState() {
-    // document.getElementById("img").innerHTML = "<img src='../red.png'>";
+function onchangeState(img, n, id_1) {
+
+    if (document.getElementById(`img${n}`).src == "http://localhost:63342/web-studio/red.png") {
+         document.getElementById(`img${n}`).src = "images.png"
+    }
+    else {
+        document.getElementById(`img${n}`).src = "red.png";
+    }
+
+    for(let i = 0; i < addArray.length; i++){
+        if(id_1 == addArray[i].id){
+            addArray[i].img = imgs;
+        }
+    }
 }
 
 function addStudio() {
@@ -119,12 +132,12 @@ function checkEmpName() {
     var reg = /^[0-9]+$/;
     var emp_name = document.getElementsByClassName("name")[0];
     if (!reg.test(emp_name.value)) {
-        document.getElementById("emp_no_tip").innerHTML = "<img src='../error.jpg'>请输入数字!";
+        document.getElementById("emp_no_tip").innerHTML = "<img src='error.jpg'>请输入数字!";
         emp_name.focus();
         return false;
     }
     else {
-        document.getElementById("emp_no_tip").innerHTML = "<img src='../right.png'>";
+        document.getElementById("emp_no_tip").innerHTML = "<img src='right.png'>";
         return true;
     }
 }
@@ -133,12 +146,12 @@ function checkEmpCols() {
     var reg = /^[1-9][0-9]{0,1}$/;
     var emp_name = document.getElementsByClassName("col-count")[0];
     if (!reg.test(emp_name.value)) {
-        document.getElementById("emp_no_tip_1").innerHTML = "<img src='../error.jpg'>请输入一位或两位数字!";
+        document.getElementById("emp_no_tip_1").innerHTML = "<img src='error.jpg'>请输入一位或两位数字!";
         emp_name.focus();
         return false;
     }
     else {
-        document.getElementById("emp_no_tip_1").innerHTML = "<img src='../right.png'>";
+        document.getElementById("emp_no_tip_1").innerHTML = "<img src='right.png'>";
         return true;
     }
 }
@@ -147,12 +160,12 @@ function checkEmpRows() {
     var reg = /^[1-9][0-9]{0,1}$/;
     var emp_name = document.getElementsByClassName("row-count")[0];
     if (!reg.test(emp_name.value)) {
-        document.getElementById("emp_no_tip_2").innerHTML = "<img src='../error.jpg'>请输入一位或两位数字!";
+        document.getElementById("emp_no_tip_2").innerHTML = "<img src='error.jpg'>请输入一位或两位数字!";
         emp_name.focus();
         return false;
     }
     else {
-        document.getElementById("emp_no_tip_2").innerHTML = "<img src='../right.png'>";
+        document.getElementById("emp_no_tip_2").innerHTML = "<img src='right.png'>";
         return true;
     }
 }
